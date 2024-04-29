@@ -1,0 +1,98 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.App {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.App-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.layout {
+    display: flex;
+    height: 100%;
+}
+
+.website-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 20px;
+}
+
+.quote {
+    position: absolute;
+    right: 20%;
+    padding: 20px;
+    max-width: 30%; 
+}
+
+.photo-box {
+    width: 70vh;
+    height: 70vh;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.photo-scroll {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.photo-scroll img {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.photo-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.photo-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.photo-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.photo-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #45a049;
+}

@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px;
+    background-color: white;
+    color: black;
+    height: 10vh;
+    width: 100vw;
+    position: relative; /* Add this to position the title absolutely within the header */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s ease; /* Add this to animate the size increase */
+}
+
+.header-content:hover {
+    /* transform: scale(1.2); Increase the size of the content when hovered */
+    cursor: pointer; /* Change the cursor to a pointer when hovering over the content */
+}
+
+.main {
+    height: 90vh; /* Main content takes up the remaining 80% of the height */
+    width: 100vw; /* Main content spans the full width */
+    overflow: hidden;
+}
+
+.layout {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack the header and main content vertically */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar {
+    margin: 20px; 
+    height: 100vh;
+    width: 20vw;
+    overflow: hidden;
+}
+
+.sidebar-content {
+    padding: 20px; 
+    margin-bottom: 20px;
+}
