@@ -6,7 +6,7 @@ import './UserLogin.css';
 import { auth } from '../firebaseConfig'; // import auth
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
-function UserRegister() {
+function AdminRegister() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     const { name, email, password } = event.target.elements;
@@ -17,7 +17,7 @@ function UserRegister() {
         name: name.value,
         email: email.value,
         password: password.value,
-        type: 'member'
+        type: 'admin'
       });
       // User signed up successfully
     } catch (error) {
@@ -31,7 +31,7 @@ function UserRegister() {
         <div className="user-signin-box">
           <Link to="/authPage" className="back-button">
             <FontAwesomeIcon icon={faArrowLeft} />
-            <span> Member</span>
+            <span> Admin</span>
           </Link>
           <h1 className="user-signin-title">Sign Up</h1>
           <form className="user-signin-box-form" onSubmit={handleSignUp}>
@@ -47,4 +47,4 @@ function UserRegister() {
   );
 }
 
-export default UserRegister;
+export default AdminRegister;

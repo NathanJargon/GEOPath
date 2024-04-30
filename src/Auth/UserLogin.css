@@ -27,7 +27,7 @@
     width: 400px;
     height: 400px;
     padding: 20px;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    background-image: linear-gradient(to top right, lightblue, lightcoral);
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     text-align: center;
@@ -36,7 +36,7 @@
 
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-0.5px); }
     100% { transform: translateY(0px); }
 }
 
@@ -106,7 +106,7 @@
 }
 
 .user-signin-box button:hover {
-    background-color: #feb47b; /* change background color to white */
+    background-color: lightblue; /* change background color to white */
     color: rgba(0, 0, 0, 0.6) !important; /* change text color to the original background color */
 }
 

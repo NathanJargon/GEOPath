@@ -4,6 +4,8 @@ import Layout from './Home/Layout';
 import AuthPage from './Auth/AuthPage'; 
 import UserLogin from './Auth/UserLogin';
 import UserRegister from './Auth/UserRegister';
+import AdminLogin from './Auth/AdminLogin';
+import AdminRegister from './Auth/AdminRegister';
 import LandingPage from './Auth/LandingPage';
 import './App.css';
 
@@ -17,6 +19,8 @@ function App() {
         <Route path="/homePage" element={<Layout />} /> 
         <Route path="/userLogin" element={<UserLogin />} /> 
         <Route path="/userRegister" element={<UserRegister />} />
+        <Route path="/adminLogin" element={<AdminLogin />} />
+        <Route path="/adminRegister" element={<AdminRegister />} />
       </Routes>
     </Router>
   );

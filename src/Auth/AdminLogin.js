@@ -6,7 +6,7 @@ import './UserLogin.css';
 import { auth } from '../firebaseConfig'; // import auth
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-function UserLogin() {
+function AdminLogin() {
   const handleSignIn = async (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
@@ -15,7 +15,7 @@ function UserLogin() {
       const docRef = doc(db, 'users', email.value);
       const docSnap = await getDoc(docRef);
   
-      if (docSnap.exists() && docSnap.data().type === 'member') {
+      if (docSnap.exists() && docSnap.data().type === 'admin') {
         await auth.signInWithEmailAndPassword(email.value, password.value);
         // User signed in successfully
       } else {
@@ -32,7 +32,7 @@ function UserLogin() {
         <div className="user-signin-box">
         <Link to="/authPage" className="back-button">
           <FontAwesomeIcon icon={faArrowLeft} />
-          <span> Member</span>
+          <span> Admin</span>
         </Link>
           <h1 className="user-signin-title">Sign In</h1>
           <form className="user-signin-box-form" onSubmit={handleSignIn}>
@@ -47,4 +47,4 @@ function UserLogin() {
   );
 }
 
-export default UserLogin;
+export default AdminLogin;

@@ -48,7 +48,7 @@ function AuthPage() {
       </div>
       <footer className="footer">
           <div>
-              <h1 className="website-title">React</h1>
+              <h1 className="website-title" onClick={navigateToLandingPage}>React</h1>
               <p>© 2024 React - Nathan Jargon</p>
           </div>
           <div className="footer-links">
