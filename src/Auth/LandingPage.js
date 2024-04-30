@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import app from '../firebaseConfig';
+import { getAuth } from 'firebase/auth';
+
+const auth = getAuth(app);
 
 function LandingPage() {
   const navigate = useNavigate();

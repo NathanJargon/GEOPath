@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './UserLogin.css';
-import { auth } from '../firebaseConfig'; // import auth
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // import required functions
+
+const auth = getAuth(); 
 
 function AdminLogin() {
+  const navigate = useNavigate();
+
   const handleSignIn = async (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
@@ -16,10 +21,10 @@ function AdminLogin() {
       const docSnap = await getDoc(docRef);
   
       if (docSnap.exists() && docSnap.data().type === 'admin') {
-        await auth.signInWithEmailAndPassword(email.value, password.value);
-        // User signed in successfully
+        await signInWithEmailAndPassword(auth, email.value, password.value); // use function directly
+        navigate('/homePage');
       } else {
-        // User is not a member or does not exist
+        alert("You can't use your account on a different role");
       }
     } catch (error) {
       // Handle error

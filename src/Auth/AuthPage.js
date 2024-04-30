@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import app from '../firebaseConfig';
+import { getAuth } from 'firebase/auth';
+
+const auth = getAuth(app);
 
 function AuthPage() {
   const navigate = useNavigate();

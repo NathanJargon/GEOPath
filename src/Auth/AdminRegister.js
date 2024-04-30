@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './UserLogin.css';
-import { auth } from '../firebaseConfig'; // import auth
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // import required functions
+
+const auth = getAuth(); 
 
 function AdminRegister() {
+  const navigate = useNavigate();
+
+
   const handleSignUp = async (event) => {
     event.preventDefault();
     const { name, email, password } = event.target.elements;
     try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email.value, password.value);
+      const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value); // use function directly
       const db = getFirestore();
       await setDoc(doc(db, 'users', email.value), {
         name: name.value,
@@ -19,7 +25,8 @@ function AdminRegister() {
         password: password.value,
         type: 'admin'
       });
-      // User signed up successfully
+      alert("Account created successfully");
+      navigate('/userLogin');
     } catch (error) {
       // Handle error
     }
