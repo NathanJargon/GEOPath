@@ -1,0 +1,124 @@
+.user-signin-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+}   
+
+.user-signin-title {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.user-signin-content {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.user-signin-box {
+    position: relative; /* Add this line */
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    text-align: center;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+    100% { transform: translateY(0px); }
+}
+
+.user-signin-box-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: black !important; /* Add !important */
+    font-size: 24px;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.user-signin-box:hover {
+    /* transform: scale(1.05); Remove this line */
+    transition: transform 0.3s ease-in-out; /* animate the transformation */
+}
+
+/* Add this rule */
+.user-signin-box:hover .back-button {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.user-signin-box input:focus {
+    border-color: #007BFF; /* change border color when input is focused */
+    transition: border-color 0.3s ease-in-out; /* animate the color change */
+}
+
+.user-signin-box form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.user-signin-box input {
+    align-self: center;
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-signin-box button {
+    align-self: center;
+    width: 70%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: lightcoral;
+    color: white !important;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* animate the transformations */
+}
+
+.user-signin-box button:hover {
+    background-color: #feb47b; /* change background color to white */
+    color: rgba(0, 0, 0, 0.6) !important; /* change text color to the original background color */
+}
+
+.user-signin-box p {
+    font-size: 0.8em;
+}
+
+.user-signin-box a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.user-signin-box a:hover {
+    text-decoration: underline;
+}

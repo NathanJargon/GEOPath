@@ -1,0 +1,150 @@
+
+body {
+    overflow-x: hidden;
+}
+
+.header {
+    margin-top: 5px;
+    margin-left: 150px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.footer div {
+    display: flex;
+    width: 95%;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.footer-links a:not(:last-child) {
+    margin-right: 100px;
+}
+
+.footer p {
+    margin-top: 35px;
+    margin-right: 50px;
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+.footer h1 {
+    margin-top: 100px;
+    margin-left: 150px;
+    padding: 0;
+}
+
+.footer-links a {
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ff0000; /* Change the color to whatever you want */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.website-title {
+    transition: transform 0.3s ease; /* Change this line */
+    cursor: pointer;
+}
+
+.website-title:hover {
+    transform: scale(1.1); /* Add this line */
+}
+
+.landing-page-box {
+    position: relative;
+    margin: 50px;
+    margin-left: 100px;
+    padding: 20px;
+    width: 90%;
+    height: 20%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: rgba(0,0,0,0) 1px solid;
+    background-image: linear-gradient(to top right, lightblue, lightcoral);
+}
+
+.landing-page-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 15px 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: white;    
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Change this line */
+}
+
+.landing-page-button:hover {
+    transform: scale(1.1); /* Add this line */
+}
+
+.header h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.landing-page-header {
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.landing-page-header h2 {
+    font-size: 5em;
+    margin-bottom: 10px;
+}
+
+.landing-page-header p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.app-container {
+    transform: scale(1);
+}
+
+@media (min-width: 1201px) {
+    .app-container {
+        transform: scale(1.25);
+    }
+}
+
+@media (max-width: 1200px) {
+    .app-container {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 800px) {
+    .app-container {
+        transform: scale(0.75);
+    }
+}
+
+@media (max-width: 500px) {
+    .app-container {
+        transform: scale(0.5);
+    }
+}

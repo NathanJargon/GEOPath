@@ -1,0 +1,135 @@
+.header {
+    margin-top: 5px;
+    margin-left: 150px;
+    font-family: 'Montserrat', sans-serif; /* Add this line */
+}
+
+.website-title {
+    transition: transform 0.3s ease; /* Change this line */
+    cursor: pointer;
+}
+
+.website-title:hover {
+    transform: scale(1.1); /* Add this line */
+}
+
+.header h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.role-selection {
+    margin-top: 100px;
+    margin-left: 175px;
+}
+
+.role-selection h2 {
+    font-size: 5em;
+    margin-bottom: 10px;
+}
+
+.role-selection p {
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.role-boxes {
+    display: flex;
+    width: 1250px;
+    height: 250px;
+    margin: auto;
+    margin-left: 250px;
+}
+
+.title-box {
+    font-size: 1.5em;
+    margin: 10px;
+    margin-left: 20px;
+    font-family: 'Montserrat', sans-serif;
+    align-self: flex-start; /* Add this line */
+}
+
+.role-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start; /* Change this line */
+    padding: 20px;
+    width: 40%;
+    height: 100%;
+    border: 1px solid #000;
+    margin-right: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, lightblue, white);
+}
+
+.role-box:last-child {
+    margin-right: 0;
+}
+
+.role-button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: black;    
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Change this line */
+}
+
+.role-button:hover {
+    transform: scale(1.1); /* Add this line */
+}
+
+.role-box:nth-child(1) {
+    width: 40%;
+    height: 100%;
+    border: 1px solid lightblue;
+    margin-right: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, lightblue, white); /* Add this line */
+}
+
+.role-box:nth-child(2) {
+    width: 40%;
+    height: 100%;
+    border: 1px solid lightcoral;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, lightcoral, white); /* Add this line */
+}
+
+.box-smallText {
+    font-size: 0.75em;
+    margin-top: 20px;
+}
+
+.app-container {
+    transform: scale(1);
+}
+
+@media (min-width: 1201px) {
+    .app-container {
+        transform: scale(1.25);
+    }
+}
+
+@media (max-width: 1200px) {
+    .app-container {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 800px) {
+    .app-container {
+        transform: scale(0.75);
+    }
+}
+
+@media (max-width: 500px) {
+    .app-container {
+        transform: scale(0.5);
+    }
+}

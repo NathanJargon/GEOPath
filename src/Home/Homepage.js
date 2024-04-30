@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import './Homepage.css';
+import './HomePage.css';
 
 function HomePage() {
   const mapStyles = {        
@@ -29,10 +29,9 @@ function HomePage() {
           <div className="photo-box">
             <h2>Latest Uploaded Photos</h2>
             <div className="photo-scroll">
-              {/* Replace this with your photos */}
-              <img src="photo1.jpg" alt="Photo 1" />
-              <img src="photo2.jpg" alt="Photo 2" />
-              <img src="photo3.jpg" alt="Photo 3" />
+            <img src="photo1.jpg" alt="First uploaded" />
+            <img src="photo2.jpg" alt="Second uploaded" />
+            <img src="photo3.jpg" alt="Third uploaded" />
             </div>
           <button className="button">Upload Photo</button>
           </div>

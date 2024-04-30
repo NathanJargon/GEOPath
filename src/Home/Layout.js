@@ -1,6 +1,6 @@
 import React from 'react';
 import './Layout.css';
-import HomePage from './Homepage';
+import HomePage from './HomePage.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
