@@ -19,15 +19,19 @@ function UserLogin() {
       const db = getFirestore();
       const docRef = doc(db, 'users', email.value);
       const docSnap = await getDoc(docRef);
-  
+
+      console.log('Document data:', docSnap.data()); // Log the document data
+
       if (docSnap.exists() && docSnap.data().type === 'member') {
         await signInWithEmailAndPassword(auth, email.value, password.value); // use function directly
+        console.log('Signed in successfully'); // Log a success message
         navigate('/homePage');
       } else {
+        console.log('User does not exist or is not a member'); // Log an error message
         alert("You can't use your account on a different role");
       }
     } catch (error) {
-      // Handle error
+      console.error('An error occurred:', error); // Log the error
     }
   };
 

@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Match any document in the 'users' collection
+    match /users/{userId} {
+      // Allow read and write if the request is authenticated
+      allow read, write: if request.auth != null;
+
+      // Allow delete if the request is from an admin
+      allow delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.type == 'admin';
+    }
+
+    // Match any document in the 'photos' collection
+    match /photos/{photoId} {
+      // Allow read if the request is authenticated
+      allow read: if request.auth != null;
+    }
+  }
+}

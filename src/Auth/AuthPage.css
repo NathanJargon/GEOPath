@@ -7,6 +7,7 @@
 .website-title {
     transition: transform 0.3s ease; /* Change this line */
     cursor: pointer;
+    transform-origin: left top;
 }
 
 .website-title:hover {
@@ -19,7 +20,7 @@
 }
 
 .role-selection {
-    margin-top: 100px;
+    margin-top: 0px;
     margin-left: 175px;
 }
 
@@ -40,6 +41,7 @@
     height: 250px;
     margin: auto;
     margin-left: 250px;
+    margin-bottom: 75px; /* Adjust this value as needed */
 }
 
 .title-box {

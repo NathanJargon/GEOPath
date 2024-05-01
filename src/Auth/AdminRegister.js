@@ -26,7 +26,7 @@ function AdminRegister() {
         type: 'admin'
       });
       alert("Account created successfully");
-      navigate('/userLogin');
+      navigate('/adminLogin');
     } catch (error) {
       // Handle error
     }
@@ -47,7 +47,7 @@ function AdminRegister() {
             <input type="password" id="password" name="password" placeholder="Password" required className="user-signin-box-input" />
             <button type="submit" className="user-signin-box-button">Sign Up</button>
           </form>
-          <p className="user-signin-box-text">Already have an account? <Link to="/userLogin" className="user-signin-box-link">Sign In</Link></p>
+          <p className="user-signin-box-text">Already have an account? <Link to="/adminLogin" className="user-signin-box-link">Sign In</Link></p>
         </div>
       </div>
     </div>

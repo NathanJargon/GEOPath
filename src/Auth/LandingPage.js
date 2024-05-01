@@ -29,13 +29,13 @@ function LandingPage() {
       </div>
       <footer className="footer">
           <div>
-              <h1 className="website-title">React</h1>
-              <p>© 2024 React - Nathan Jargon</p>
+              <h1 className="website-title"></h1>
           </div>
           <div className="footer-links">
               <a href="/terms">Terms of Service</a>
               <a href="/privacy">Privacy Policy</a>
               <a href="/contact">Contact Information</a>
+              <p>© 2024 React - Nathan Jargon</p>
           </div>
       </footer>
     </div>
