@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindow, MarkerF } from '@react-google-maps/api';
 import './HomePage.css';
 import app from '../firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -31,42 +31,75 @@ function HomePage() {
   const [isPendingBoxVisible, setIsPendingBoxVisible] = useState(false);
   const [currentPendingPhoto, setCurrentPendingPhoto] = useState(null);
   const [userType, setUserType] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isAdminBoxVisible, setIsAdminBoxVisible] = useState(false);
+
+  useEffect(() => {
+    if (currentUser && currentUser.type === 'admin') {
+      setIsAdminBoxVisible(true);
+    } else {
+      setIsAdminBoxVisible(false);
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      console.log('Setting user:', auth.currentUser);
+      setUser(auth.currentUser);
+    } else {
+      console.log('auth.currentUser is null or undefined');
+    }
+  }, [auth.currentUser]);
   
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
       if (user) {
         const docRef = doc(db, 'users', user.email);
         const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        console.log('Document ID:', docRef.id); // Log the document ID
-        console.log('Document data:', docSnap.data()); // Log all the fields of the document
-
-        setUserName(docSnap.data().name);
-        setUserType(docSnap.data().type);
-
-        // Fetch the pending photos if the user is an admin
-        if (docSnap.data().type === 'admin') {
-          fetchPendingPhotos();
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          if (userData) {
+            setUserName(userData.name);
+            setUserType(userData.type);
+            // Set isAdminBoxVisible here
+            setIsAdminBoxVisible(userData.type === 'admin');
+          }
+        } else {
+          console.log('No such document!');
         }
-      } else {
-        console.log('No such document!');
-      }
       } else {
         setUserName('');
         setUserType(null);
+        setIsAdminBoxVisible(false); // Set isAdminBoxVisible to false if there is no user
       }
+      setLoading(false); 
     });
 
-    // Clean up the listener when the component is unmounted
     return unsubscribe;
   }, [auth, db]);
-  
+
   useEffect(() => {
-    if (userType === 'admin') {
+    if (userType && userType === 'admin') {
+      console.log('User type is admin');
       fetchPendingPhotos();
+    } else {
+      console.log('User type is not admin or is null or undefined');
     }
   }, [userType]);
+
+  useEffect(() => {
+    if (auth.currentUser && auth.currentUser.type && auth.currentUser.type === 'admin') {
+      console.log('Fetching pending photos');
+      fetchPendingPhotos();
+    } else {
+      console.log('auth.currentUser, auth.currentUser.type, or auth.currentUser.type is null or undefined');
+    }
+  }, [auth.currentUser]);
 
   const handleImageClick = (photo, isPending) => {
     if (isPending) {
@@ -183,7 +216,7 @@ function HomePage() {
   };
 
   useEffect(() => {
-    if (auth.currentUser && auth.currentUser.type === 'admin') {
+    if (auth.currentUser && auth.currentUser.type && auth.currentUser.type === 'admin') {
       fetchPendingPhotos();
     }
   }, [auth.currentUser]);
@@ -191,24 +224,27 @@ function HomePage() {
   useEffect(() => {
     const fetchUser = async () => {
       if (auth.currentUser) {
+        console.log('Fetching user:', auth.currentUser.email);
         const docRef = doc(db, 'users', auth.currentUser.email);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
+          console.log('User document exists');
           setUserName(docSnap.data().name);
-          // Add this line to fetch the 'type' field
-          auth.currentUser.type = docSnap.data().type;
+          setUserType(docSnap.data().type); // Ensure that the user type is being set correctly
         } else {
           console.log('No such document!');
         }
+      } else {
+        console.log('auth.currentUser is null or undefined');
       }
     };
 
     fetchUser();
-  }, []);
+  }, [auth.currentUser]); // Add auth.currentUser to the dependency array
 
   const handleApproveClick = async (photo) => {
-    if (userType === 'admin') {
+    if (userType === 'admin' && auth.currentUser) {
     try {
       const userQuery = query(collection(db, 'users'), where('email', '==', auth.currentUser.email));
       const userQuerySnapshot = await getDocs(userQuery);
@@ -235,7 +271,7 @@ function HomePage() {
   };
 
   const handleRejectClick = async (photo) => {
-    if (userType === 'admin') {
+    if (userType === 'admin' && auth.currentUser) {
     try {
       const userQuery = query(collection(db, 'users'), where('email', '==', auth.currentUser.email));
       const userQuerySnapshot = await getDocs(userQuery);
@@ -269,7 +305,32 @@ function HomePage() {
     lat: 13.41, lng: 122.56
   };
   
+  const regions = [
+    { name: 'Region I', lat: 16.61568, lng: 120.31666, info: 'Ilocos Region' },
+    { name: 'Region II', lat: 17.35115, lng: 121.17539, info: 'Cagayan Valley' },
+    { name: 'Region III', lat: 15.482772, lng: 120.712002, info: 'Central Luzon' },
+    { name: 'Region IV-A', lat: 14.10078, lng: 121.07937, info: 'CALABARZON' },
+    { name: 'Region IV-B', lat: 9.84321, lng: 118.73648, info: 'MIMAROPA' },
+    { name: 'Region V', lat: 13.420988, lng: 123.413673, info: 'Bicol Region' },
+    { name: 'Region VI', lat: 10.71446, lng: 122.56263, info: 'Western Visayas' },
+    { name: 'Region VII', lat: 10.315699, lng: 123.885437, info: 'Central Visayas' },
+    { name: 'Region VIII', lat: 11.254339, lng: 124.961687, info: 'Eastern Visayas' },
+    { name: 'Region IX', lat: 8.154004, lng: 123.258537, info: 'Zamboanga Peninsula' },
+    { name: 'Region X', lat: 8.228021, lng: 124.245242, info: 'Northern Mindanao' },
+    { name: 'Region XI', lat: 7.304162, lng: 125.685848, info: 'Davao Region' },
+    { name: 'Region XII', lat: 6.270691, lng: 124.685650, info: 'SOCCSKSARGEN' },
+    { name: 'Region XIII', lat: 8.947538, lng: 125.540623, info: 'Caraga' },
+    { name: 'NCR', lat: 14.609054, lng: 121.022256, info: 'National Capital Region' },
+    { name: 'CAR', lat: 16.402333, lng: 120.596007, info: 'Cordillera Administrative Region' },
+    { name: 'ARMM', lat: 6.956838, lng: 124.242159, info: 'Autonomous Region in Muslim Mindanao' },
+    { name: 'BARMM', lat: 7.204667, lng: 124.231789, info: 'Bangsamoro Autonomous Region in Muslim Mindanao' },
+  ];
+
   console.log('Current user:', auth.currentUser);
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <div>
@@ -287,13 +348,34 @@ function HomePage() {
         </div>
       </header>
       <div className="homepage-box">
-      <LoadScript
-        googleMapsApiKey='AIzaSyDxwKIHOIfYJmWAZH6E8eItwB4pN3Q-hdA'>
-        <GoogleMap
-          mapContainerStyle={mapStyles}
-          zoom={5}
-          center={defaultCenter}>
-          <Marker position={defaultCenter}/>
+      <LoadScript googleMapsApiKey='AIzaSyDxwKIHOIfYJmWAZH6E8eItwB4pN3Q-hdA'>
+        <GoogleMap mapContainerStyle={mapStyles} zoom={4} center={defaultCenter}>
+          {regions.map((region, index) => {
+            console.log('Region:', region); // Add this line
+            return (
+              <MarkerF 
+                key={index} 
+                position={{ lat: region.lat, lng: region.lng }}
+                onClick={() => {
+                  setSelectedRegion(region);
+                }}
+              />
+            );
+          })}
+
+          {selectedRegion && (
+            <InfoWindow
+              position={{ lat: selectedRegion.lat, lng: selectedRegion.lng }}
+              onCloseClick={() => {
+                setSelectedRegion(null);
+              }}
+            >
+              <div>
+                <h4>{selectedRegion.name}</h4>
+                <p>{selectedRegion.info}</p>
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </LoadScript>
     </div>
@@ -336,8 +418,7 @@ function HomePage() {
       </div>
     </div>
 
-  {auth.currentUser.type === 'admin' && (
-    <div className="homepage-box">
+    <div className="homepage-box" style={{ display: isAdminBoxVisible ? 'block' : 'none' }}>
       <h2>Pending Photos</h2>
       <div className="homepage-photo-scroll">
         {pendingPhotos.map((photo, index) => (
@@ -383,7 +464,7 @@ function HomePage() {
           </div>
         )}
       </div>
-    )}
+    
       <footer className="footer">
         <div>
           <h1 className="homepage-title"></h1>
