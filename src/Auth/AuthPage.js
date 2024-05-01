@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,18 @@ const auth = getAuth(app);
 
 function AuthPage() {
   const navigate = useNavigate();
+  const [overlayContent, setOverlayContent] = useState('');
+  const [overlayIsVisible, setOverlayIsVisible] = useState(false);
 
+  const showOverlay = (content) => {
+    setOverlayContent(content);
+    setOverlayIsVisible(true);
+  };
+
+  const hideOverlay = () => {
+    setOverlayIsVisible(false);
+  };
+  
   const navigateToUserPage = () => {
     navigate('/userLogin');
   };
@@ -51,18 +62,34 @@ function AuthPage() {
         </div>
       </div>
       <footer className="footer">
-          <div>
-              <h1 className="website-title" onClick={navigateToLandingPage}></h1>
-          </div>
-          <div className="footer-links">
-              <a href="/terms">Terms of Service</a>
-              <a href="/privacy">Privacy Policy</a>
-              <a href="/contact">Contact Information</a>
-              <p>© 2024 React - Nathan Jargon</p>
-          </div>
+        <div>
+          <h1 className="website-title"></h1>
+        </div>
+        <div className="footer-links">
+          <button onClick={() => showOverlay('Terms of Service')}>Terms of Service</button>
+          <button onClick={() => showOverlay('Privacy Policy')}>Privacy Policy</button>
+          <button onClick={() => showOverlay('Contact Information')}>Contact Information</button>
+          <p>© 2024 React - Nathan Jargon</p>
+        </div>
       </footer>
+      {overlayIsVisible && (
+        <div className="overlay-box">
+          <div className="overlay-content">
+            <button 
+              className="homepage-button" 
+              style={{position: 'absolute', height: '100px', top: '10px', right: '10px', backgroundColor: 'black', color: 'white'}} 
+              onClick={hideOverlay}
+            >
+              Close
+            </button>
+            <h2 className="overlay-title">{overlayContent}</h2>
+            <p className="overlay-description">This is a placeholder description for {overlayContent}.</p>
+          </div>
+        </div>
+      )}
     </div>
-  );  
+  );
 }
+
 
 export default AuthPage;

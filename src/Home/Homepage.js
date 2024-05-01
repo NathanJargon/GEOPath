@@ -36,7 +36,18 @@ function HomePage() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAdminBoxVisible, setIsAdminBoxVisible] = useState(false);
+  const [overlayContent, setOverlayContent] = useState('');
+  const [overlayIsVisible, setOverlayIsVisible] = useState(false);
 
+  const showOverlay = (content) => {
+    setOverlayContent(content);
+    setOverlayIsVisible(true);
+  };
+
+  const hideOverlay = () => {
+    setOverlayIsVisible(false);
+  };
+  
   useEffect(() => {
     if (currentUser && currentUser.type === 'admin') {
       setIsAdminBoxVisible(true);
@@ -115,6 +126,28 @@ function HomePage() {
     try {
       await signOut(auth);
       navigate('/landingPage');
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred.');
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    if (!currentPhoto) {
+      console.error('No photo selected');
+      return;
+    }
+  
+    try {
+      const photoRef = doc(db, 'photos', currentPhoto.id);
+      await deleteDoc(photoRef);
+  
+      // Fetch the photos again after a photo is deleted
+      fetchPhotos();
+      fetchPendingPhotos();
+  
+      // Hide the overlay
+      setIsBoxVisible(false);
     } catch (error) {
       console.error(error);
       alert('An error occurred.');
@@ -396,24 +429,34 @@ function HomePage() {
           ))}
         </div>
         <button className="homepage-button" onClick={handleUploadClick}>Upload Photo</button>
-        {isBoxVisible && currentPhoto && (
-        <div className="overlay-box">
-          <div className="overlay-content">
-            <img src={currentPhoto.url} alt={currentPhoto.title} className="overlay-image" />
+          {isBoxVisible && currentPhoto && (
+            <div className="overlay-box">
+              <div className="overlay-content">
+                <img src={currentPhoto.url} alt={currentPhoto.title} className="overlay-image" />
                 <div className="overlay-text">
-                <button 
-                className="homepage-button" 
-                style={{backgroundColor: 'black', color: 'white'}} 
-                onClick={handleCloseClick}
-              >
-                Close
-              </button>
-                <h2 className="overlay-title">{currentPhoto ? currentPhoto.title : ''}</h2>
-                <p className="overlay-description">{currentPhoto ? currentPhoto.description : ''}</p>
+                  <button 
+                    className="homepage-button" 
+                    style={{backgroundColor: 'black', color: 'white'}} 
+                    onClick={handleCloseClick}
+                  >
+                    Close
+                  </button>
+                  {isAdminBoxVisible && (
+                    <button 
+                      className="homepage-button" 
+                      style={{backgroundColor: 'red', color: 'white', marginRight: '175px'}} 
+                      onClick={handleDeleteClick}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  <h2 className="overlay-title">{currentPhoto ? currentPhoto.title : ''}</h2>
+                  <p className="overlay-description">{currentPhoto ? currentPhoto.description : ''}</p>
+                </div>
+              </div>
             </div>
-            </div>
-          </div>
-        )}
+          )}
+
         
       </div>
     </div>
@@ -467,17 +510,33 @@ function HomePage() {
     
       <footer className="footer">
         <div>
-          <h1 className="homepage-title"></h1>
+          <h1 className="website-title"></h1>
         </div>
         <div className="footer-links">
-          <a href="/terms">Terms of Service</a>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/contact">Contact Information</a>
+          <button onClick={() => showOverlay('Terms of Service')}>Terms of Service</button>
+          <button onClick={() => showOverlay('Privacy Policy')}>Privacy Policy</button>
+          <button onClick={() => showOverlay('Contact Information')}>Contact Information</button>
           <p>© 2024 React - Nathan Jargon</p>
         </div>
       </footer>
+      {overlayIsVisible && (
+        <div className="overlay-box">
+          <div className="overlay-content">
+            <button 
+              className="homepage-button" 
+              style={{position: 'absolute', height: '100px', top: '10px', right: '10px', backgroundColor: 'black', color: 'white'}} 
+              onClick={hideOverlay}
+            >
+              Close
+            </button>
+            <h2 className="overlay-title">{overlayContent}</h2>
+            <p className="overlay-description">This is a placeholder description for {overlayContent}.</p>
+          </div>
+        </div>
+      )}
     </div>
-  );  
+  );
 }
+
 
 export default HomePage;

@@ -84,6 +84,20 @@ a {
     background-image: linear-gradient(to top right, lightblue, lightcoral);
 }
 
+.footer-links button {
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-right: 50px;
+    margin-bottom: 30px;
+  }
+  
+  .footer-links button:hover {
+    color: lightcoral;
+  }
+
 .landing-page-button {
     position: absolute;
     bottom: 10px;
