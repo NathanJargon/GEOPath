@@ -132,27 +132,28 @@ function HomePage() {
     }
   };
 
-  const handleDeleteClick = async () => {
-    if (!currentPhoto) {
+  const handleDeleteClick = async (photo) => {
+    if (!photo || !photo.id) {
       console.error('No photo selected');
       return;
     }
-  
+
     try {
-      const photoRef = doc(db, 'photos', currentPhoto.id);
+      const photoRef = doc(db, 'photos', photo.id);
       await deleteDoc(photoRef);
-  
-      // Fetch the photos again after a photo is deleted
-      fetchPhotos();
-      fetchPendingPhotos();
-  
-      // Hide the overlay
-      setIsBoxVisible(false);
     } catch (error) {
-      console.error(error);
-      alert('An error occurred.');
+      console.error('Error deleting document:', error);
+      return;
     }
+
+    // Fetch the photos again after a photo is deleted
+    fetchPhotos();
+    fetchPendingPhotos();
+
+    // Hide the overlay
+    setIsBoxVisible(false);
   };
+
 
   const handleCloseClick = () => {
     setIsBoxVisible(false);
@@ -339,24 +340,24 @@ function HomePage() {
   };
   
   const regions = [
-    { name: 'Region I', lat: 16.61568, lng: 120.31666, info: 'Ilocos Region' },
-    { name: 'Region II', lat: 17.35115, lng: 121.17539, info: 'Cagayan Valley' },
-    { name: 'Region III', lat: 15.482772, lng: 120.712002, info: 'Central Luzon' },
-    { name: 'Region IV-A', lat: 14.10078, lng: 121.07937, info: 'CALABARZON' },
-    { name: 'Region IV-B', lat: 9.84321, lng: 118.73648, info: 'MIMAROPA' },
-    { name: 'Region V', lat: 13.420988, lng: 123.413673, info: 'Bicol Region' },
-    { name: 'Region VI', lat: 10.71446, lng: 122.56263, info: 'Western Visayas' },
-    { name: 'Region VII', lat: 10.315699, lng: 123.885437, info: 'Central Visayas' },
-    { name: 'Region VIII', lat: 11.254339, lng: 124.961687, info: 'Eastern Visayas' },
-    { name: 'Region IX', lat: 8.154004, lng: 123.258537, info: 'Zamboanga Peninsula' },
-    { name: 'Region X', lat: 8.228021, lng: 124.245242, info: 'Northern Mindanao' },
-    { name: 'Region XI', lat: 7.304162, lng: 125.685848, info: 'Davao Region' },
-    { name: 'Region XII', lat: 6.270691, lng: 124.685650, info: 'SOCCSKSARGEN' },
-    { name: 'Region XIII', lat: 8.947538, lng: 125.540623, info: 'Caraga' },
-    { name: 'NCR', lat: 14.609054, lng: 121.022256, info: 'National Capital Region' },
-    { name: 'CAR', lat: 16.402333, lng: 120.596007, info: 'Cordillera Administrative Region' },
-    { name: 'ARMM', lat: 6.956838, lng: 124.242159, info: 'Autonomous Region in Muslim Mindanao' },
-    { name: 'BARMM', lat: 7.204667, lng: 124.231789, info: 'Bangsamoro Autonomous Region in Muslim Mindanao' },
+    { name: 'Region I', lat: 16.61568, lng: 120.31666, info: 'Ilocos Region', hazards: ['Flood', 'Earthquake'] },
+    { name: 'Region II', lat: 17.35115, lng: 121.17539, info: 'Cagayan Valley', hazards: ['Typhoon', 'Landslide'] },
+    { name: 'Region III', lat: 15.482772, lng: 120.712002, info: 'Central Luzon', hazards: ['Flood', 'Earthquake'] },
+    { name: 'Region IV-A', lat: 14.10078, lng: 121.07937, info: 'CALABARZON', hazards: ['Volcanic Eruption', 'Earthquake'] },
+    { name: 'Region IV-B', lat: 9.84321, lng: 118.73648, info: 'MIMAROPA', hazards: ['Typhoon', 'Earthquake'] },
+    { name: 'Region V', lat: 13.420988, lng: 123.413673, info: 'Bicol Region', hazards: ['Typhoon', 'Volcanic Eruption'] },
+    { name: 'Region VI', lat: 10.71446, lng: 122.56263, info: 'Western Visayas', hazards: ['Typhoon', 'Flood'] },
+    { name: 'Region VII', lat: 10.315699, lng: 123.885437, info: 'Central Visayas', hazards: ['Earthquake', 'Typhoon'] },
+    { name: 'Region VIII', lat: 11.254339, lng: 124.961687, info: 'Eastern Visayas', hazards: ['Typhoon', 'Flood'] },
+    { name: 'Region IX', lat: 8.154004, lng: 123.258537, info: 'Zamboanga Peninsula', hazards: ['Armed Conflict', 'Flood'] },
+    { name: 'Region X', lat: 8.228021, lng: 124.245242, info: 'Northern Mindanao', hazards: ['Flood', 'Landslide'] },
+    { name: 'Region XI', lat: 7.304162, lng: 125.685848, info: 'Davao Region', hazards: ['Earthquake', 'Flood'] },
+    { name: 'Region XII', lat: 6.270691, lng: 124.685650, info: 'SOCCSKSARGEN', hazards: ['Flood', 'Earthquake'] },
+    { name: 'Region XIII', lat: 8.947538, lng: 125.540623, info: 'Caraga', hazards: ['Flood', 'Landslide'] },
+    { name: 'NCR', lat: 14.609054, lng: 121.022256, info: 'National Capital Region', hazards: ['Earthquake', 'Flood'] },
+    { name: 'CAR', lat: 16.402333, lng: 120.596007, info: 'Cordillera Administrative Region', hazards: ['Landslide', 'Earthquake'] },
+    { name: 'ARMM', lat: 6.956838, lng: 124.242159, info: 'Autonomous Region in Muslim Mindanao', hazards: ['Armed Conflict', 'Flood'] },
+    { name: 'BARMM', lat: 7.204667, lng: 124.231789, info: 'Bangsamoro Autonomous Region in Muslim Mindanao', hazards: ['Armed Conflict', 'Flood'] },
   ];
 
   console.log('Current user:', auth.currentUser);
@@ -406,6 +407,7 @@ function HomePage() {
               <div>
                 <h4>{selectedRegion.name}</h4>
                 <p>{selectedRegion.info}</p>
+                <p><strong>Hazards:</strong> {selectedRegion.hazards.join(', ')}</p>
               </div>
             </InfoWindow>
           )}
@@ -445,13 +447,11 @@ function HomePage() {
                     <button 
                       className="homepage-button" 
                       style={{backgroundColor: 'red', color: 'white', marginRight: '175px'}} 
-                      onClick={handleDeleteClick}
+                      onClick={() => handleDeleteClick(currentPhoto)}
                     >
                       Delete
                     </button>
                   )}
-                  <h2 className="overlay-title">{currentPhoto ? currentPhoto.title : ''}</h2>
-                  <p className="overlay-description">{currentPhoto ? currentPhoto.description : ''}</p>
                 </div>
               </div>
             </div>
@@ -500,8 +500,6 @@ function HomePage() {
                 >
                   Reject
                 </button>
-                  <h2 className="overlay-title">{currentPendingPhoto ? currentPendingPhoto.title : ''}</h2>
-                  <p className="overlay-description">{currentPendingPhoto ? currentPendingPhoto.description : ''}</p>
               </div>
             </div>
           </div>

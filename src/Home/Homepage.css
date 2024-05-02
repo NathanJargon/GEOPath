@@ -86,9 +86,11 @@ body {
     border: 1px solid rgba(0, 0, 0, 0);
     z-index: 1000; /* To ensure the box is always on top */
     animation: fadeIn 0.5s ease-in-out;
-    width: 70%; /* Adjust this value to change the width of the box */
-    height: 70%; /* Adjust this value to change the height of the box */
+    width: auto; /* Adjust this value to change the width of the box */
+    height: auto; /* Adjust this value to change the height of the box */
     display: flex;
+    max-width: 100%; /* Adjust this value to change the maximum width of the box */
+    max-height: 100%; 
     justify-content: center;
     align-items: center;
     border-radius: 10px;
@@ -108,12 +110,14 @@ body {
 
 .overlay-content {
   display: flex;
-  width: 80%; /* Adjust as needed */
-  height: 80%; /* Adjust as needed */
+  width: auto;
+  height: auto;
+  max-width: 80%; /* Adjust this value to change the maximum width of the content */
+  max-height: 80%; 
 }
 
 .overlay-image {
-  width: 50%; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
