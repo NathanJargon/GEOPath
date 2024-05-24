@@ -98,21 +98,21 @@ body {
 
 .overlay-title {
     text-align: center;
-    margin-left: 100px;
+    margin-left: 10px;
 }
 
 .overlay-description {
     text-align: justify;
     color: black;
     margin-top: 20px; /* Adjust as needed */
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
 .overlay-content {
   display: flex;
   width: auto;
   height: auto;
-  max-width: 80%; /* Adjust this value to change the maximum width of the content */
+  max-width: 100%; /* Adjust this value to change the maximum width of the content */
   max-height: 80%; 
 }
 

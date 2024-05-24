@@ -25,7 +25,7 @@ function AdminLogin() {
       if (docSnap.exists() && docSnap.data().type === 'admin') {
         await signInWithEmailAndPassword(auth, email.value, password.value); // use function directly
         console.log('Signed in successfully'); // Log a message when sign in is successful
-        navigate('/homePage');
+        navigate('/adminPage');
       } else {
         console.log('Sign in failed: Invalid user type'); // Log a message when sign in fails due to invalid user type
         alert("You can't use your account on a different role");

@@ -25,7 +25,7 @@ function UserLogin() {
       if (docSnap.exists() && docSnap.data().type === 'member') {
         await signInWithEmailAndPassword(auth, email.value, password.value); // use function directly
         console.log('Signed in successfully'); // Log a success message
-        navigate('/homePage');
+        navigate('/userPage');
       } else {
         console.log('User does not exist or is not a member'); // Log an error message
         alert("You can't use your account on a different role");
