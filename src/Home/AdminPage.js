@@ -15,6 +15,7 @@ import { query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
+import { regions } from './regions.js';
 
 function AdminPage() {
   const navigate = useNavigate();
@@ -326,27 +327,6 @@ function AdminPage() {
     lat: 13.41, lng: 122.56
   };
   
-  const regions = [
-    { name: 'Region I', lat: 16.61568, lng: 120.31666, info: 'Ilocos Region', hazards: ['Flood', 'Earthquake'] },
-    { name: 'Region II', lat: 17.35115, lng: 121.17539, info: 'Cagayan Valley', hazards: ['Typhoon', 'Landslide'] },
-    { name: 'Region III', lat: 15.482772, lng: 120.712002, info: 'Central Luzon', hazards: ['Flood', 'Earthquake'] },
-    { name: 'Region IV-A', lat: 14.10078, lng: 121.07937, info: 'CALABARZON', hazards: ['Volcanic Eruption', 'Earthquake'] },
-    { name: 'Region IV-B', lat: 9.84321, lng: 118.73648, info: 'MIMAROPA', hazards: ['Typhoon', 'Earthquake'] },
-    { name: 'Region V', lat: 13.420988, lng: 123.413673, info: 'Bicol Region', hazards: ['Typhoon', 'Volcanic Eruption'] },
-    { name: 'Region VI', lat: 10.71446, lng: 122.56263, info: 'Western Visayas', hazards: ['Typhoon', 'Flood'] },
-    { name: 'Region VII', lat: 10.315699, lng: 123.885437, info: 'Central Visayas', hazards: ['Earthquake', 'Typhoon'] },
-    { name: 'Region VIII', lat: 11.254339, lng: 124.961687, info: 'Eastern Visayas', hazards: ['Typhoon', 'Flood'] },
-    { name: 'Region IX', lat: 8.154004, lng: 123.258537, info: 'Zamboanga Peninsula', hazards: ['Armed Conflict', 'Flood'] },
-    { name: 'Region X', lat: 8.228021, lng: 124.245242, info: 'Northern Mindanao', hazards: ['Flood', 'Landslide'] },
-    { name: 'Region XI', lat: 7.304162, lng: 125.685848, info: 'Davao Region', hazards: ['Earthquake', 'Flood'] },
-    { name: 'Region XII', lat: 6.270691, lng: 124.685650, info: 'SOCCSKSARGEN', hazards: ['Flood', 'Earthquake'] },
-    { name: 'Region XIII', lat: 8.947538, lng: 125.540623, info: 'Caraga', hazards: ['Flood', 'Landslide'] },
-    { name: 'NCR', lat: 14.609054, lng: 121.022256, info: 'National Capital Region', hazards: ['Earthquake', 'Flood'] },
-    { name: 'CAR', lat: 16.402333, lng: 120.596007, info: 'Cordillera Administrative Region', hazards: ['Landslide', 'Earthquake'] },
-    { name: 'ARMM', lat: 6.956838, lng: 124.242159, info: 'Autonomous Region in Muslim Mindanao', hazards: ['Armed Conflict', 'Flood'] },
-    { name: 'BARMM', lat: 7.204667, lng: 124.231789, info: 'Bangsamoro Autonomous Region in Muslim Mindanao', hazards: ['Armed Conflict', 'Flood'] },
-  ];
-
   console.log('Current user:', auth.currentUser);
 
   if (loading) {
