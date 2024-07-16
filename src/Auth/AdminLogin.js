@@ -49,7 +49,6 @@ function AdminLogin() {
             <input type="password" id="password" name="password" placeholder="Password" required className="user-signin-box-input" />
             <button type="submit" className="user-signin-box-button">Sign In</button>
           </form>
-          <p className="user-signin-box-text">Don't have an account? <Link to="/adminRegister" className="user-signin-box-link">Sign Up</Link></p>
         </div>
       </div>
     </div>

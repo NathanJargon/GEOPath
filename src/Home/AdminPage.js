@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker, InfoWindow, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindowF, MarkerF } from '@react-google-maps/api';
 import './HomePage.css';
 import app from '../firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -320,7 +320,7 @@ function AdminPage() {
 
   const mapStyles = {        
     height: "500px",
-    width: "1325px"
+    width: "100%"
   };
   
   const defaultCenter = {
@@ -349,23 +349,23 @@ function AdminPage() {
         </div>
       </header>
       <div className="homepage-box">
-      <LoadScript googleMapsApiKey='AIzaSyDxwKIHOIfYJmWAZH6E8eItwB4pN3Q-hdA'>
-        <GoogleMap mapContainerStyle={mapStyles} zoom={4} center={defaultCenter}>
-          {regions.map((region, index) => {
-            console.log('Region:', region); // Add this line
-            return (
-              <MarkerF 
-                key={index} 
-                position={{ lat: region.lat, lng: region.lng }}
-                onClick={() => {
-                  setSelectedRegion(region);
-                }}
-              />
-            );
-          })}
+        <LoadScript googleMapsApiKey='AIzaSyB2jldjjKxTKopeP3n2OrZdXWc_6-BS794'>
+          <GoogleMap mapContainerStyle={mapStyles} zoom={4} center={defaultCenter} className="map-container">
+            {regions.map((region, index) => {
+              console.log('Region:', region); // Add this line
+              return (
+                <MarkerF 
+                  key={index} 
+                  position={{ lat: region.lat, lng: region.lng }}
+                  onClick={() => {
+                    setSelectedRegion(region);
+                  }}
+                />
+              );
+            })}
 
           {selectedRegion && (
-            <InfoWindow
+            <InfoWindowF
               position={{ lat: selectedRegion.lat, lng: selectedRegion.lng }}
               onCloseClick={() => {
                 setSelectedRegion(null);
@@ -376,7 +376,7 @@ function AdminPage() {
                 <p>{selectedRegion.info}</p>
                 <p><strong>Hazards:</strong> {selectedRegion.hazards.join(', ')}</p>
               </div>
-            </InfoWindow>
+            </InfoWindowF>
           )}
         </GoogleMap>
       </LoadScript>

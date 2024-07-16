@@ -19,6 +19,11 @@ body {
     cursor: pointer;
   }
 
+.map-container {
+    height: 500px;
+    width: 100%; 
+}
+  
 .dropdown-item {
     display: block;
     width: 100%;
